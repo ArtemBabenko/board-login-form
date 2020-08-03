@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Redirect } from 'react-router-dom';
-// import { API_AUTH } from '../../services';
+import { Redirect, NavLink } from 'react-router-dom';
+import { API_AUTH } from '../../services';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-// import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
+import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
 import cake_img from '../../img/auth-cake.png';
 import part_cake_img from '../../img/auth-part-cake.png';
 import './auth.scss';
@@ -32,7 +32,7 @@ class Auth extends Component {
   };
 
   sendUserData = (data) => {
-    axios.post('http://95.217.222.157:4001/singin', data)
+    axios.post(API_AUTH, data)
       .then(response => {
         if (response.status === 200) {
           localStorage.setItem(response.data.name, response.data.token);
@@ -57,19 +57,23 @@ class Auth extends Component {
 
   render() {
     if (this.state.redirect) { return <Redirect to='/' /> }
-    const infoBlock = {
+    const infoTitleBlock = {
       title: 'Cайт объявлений',
       info: 'Легко купить, легко продать'
     }
     return (
-        <div className='auth-container'>
+      <div className='auth-container'>
         <Grid container>
           <Grid xs={12} lg={6} item className='content-column'>
             <div className='title-container'>
-              <img className='img-cake' src={cake_img} alt="imgCake" />
-              <img className='img-part-cake' src={part_cake_img} alt="imgPartCake" />
+              <div className='img-part-cake-container'>
+                <img className='img-part-cake' src={part_cake_img} alt="imgPartCake" />
+              </div>
               <div className='title'>
-                {/* <InfoTitleBlock infoBlock={infoBlock} /> */}
+                <InfoTitleBlock infoBlock={infoTitleBlock} />
+              </div>
+              <div className='img-cake-container'>
+                <img className='img-cake' src={cake_img} alt="imgCake" />
               </div>
             </div>
           </Grid>
@@ -98,6 +102,10 @@ class Auth extends Component {
                 >
                   SIGN IN
                 </Button>
+                <div className='login-link'>
+                  <span>Нет учетной записи? </span>
+                  <NavLink className='link' to='/'>Зарегистрируйтесь</NavLink>
+                </div>
               </form>
             </div>
           </Grid>

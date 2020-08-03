@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-// import { API_REG } from '../../services';
+import { Redirect, NavLink } from 'react-router-dom';
+import { API_REG } from '../../services';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import { Redirect } from 'react-router-dom';
-// import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
+import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
 import cake_img from '../../img/registration-cake.png';
 import cake_heart_img from '../../img/registration-cake2.png';
 import candy_img from '../../img/registration-candy.png';
@@ -55,12 +55,11 @@ class Registration extends Component {
     }
 
     sendUserData = (data) => {
-        axios.post('http://95.217.222.157:4001/singup', data)
+        axios.post(API_REG, data)
             .then(response => {
                 if (response.status === 201) {
                     // localStorage.setItem(response.data.name, response.data.token);
                     this.setState({ redirect: true });
-                    console.log(response);
                 }
             })
             .catch(error => {
@@ -93,7 +92,7 @@ class Registration extends Component {
 
     render() {
         if (this.state.redirect) { return <Redirect to='/welcome-page' />; }
-        const infoBlock = {
+        const infoTitleBlock = {
             title: 'Cайт объявлений',
             info: 'Легко купить, легко продать'
         }
@@ -102,11 +101,17 @@ class Registration extends Component {
                 <Grid container>
                     <Grid xs={12} lg={6} item className='content-column'>
                         <div className='title-container'>
-                            <img className='img-cake' src={cake_img} alt="imgCake" />
-                            <img className='img-heart-cake' src={cake_heart_img} alt="imgCake" />
-                            <img className='img-candy' src={candy_img} alt="imgCandy" />
+                            <div className='img-cake-container'>
+                                <img className='img-cake' src={cake_img} alt="imgCake" />
+                            </div>
                             <div className='title'>
-                                {/* <InfoTitleBlock infoBlock={infoBlock} /> */}
+                                <InfoTitleBlock infoBlock={infoTitleBlock} />
+                            </div>
+                            <div className='img-heart-cake-container'>
+                                <img className='img-heart-cake' src={cake_heart_img} alt="imgCake" />
+                            </div>
+                            <div className='img-candy-container'>
+                                <img className='img-candy' src={candy_img} alt="imgCandy" />
                             </div>
                         </div>
                     </Grid>
@@ -136,13 +141,17 @@ class Registration extends Component {
                                     onChange={this.passwordConfirm}
                                     type='password' />
                                 <Button
-                                    className='registration-button'
+                                    className='reg-button'
                                     variant='contained'
                                     type='submit'
                                     color='secondary'
                                 >
                                     SIGN UP
                                 </Button>
+                                <div className='login-link'>
+                                    <span>У вас есть аккаунт? </span>
+                                    <NavLink className='link' to='/auth'>Войти</NavLink>
+                                </div>
                             </form>
                         </div>
                     </Grid>
