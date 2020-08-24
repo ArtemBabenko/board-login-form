@@ -9,6 +9,7 @@ import cake_img from '../../img/auth-cake.png';
 import part_cake_img from '../../img/auth-part-cake.png';
 import './auth.scss';
 
+
 class Auth extends Component {
 
   constructor(props) {
