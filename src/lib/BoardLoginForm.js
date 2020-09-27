@@ -4,12 +4,24 @@ import Auth from './components/Auth/Auth';
 import Reg from './components/Reg/Reg';
 import WelcomePage from './components/WelcomePage/WelcomePage';
 
-function BoardLoginForm() {
+function BoardLoginForm(props) {
+  
   return (
     <Router>
-      <Route path='/' component={Reg} exact />
-      <Route path='/auth' component={Auth} exact />
-      <Route path='/welcome-page' component={WelcomePage} exact />
+      <Route path='/reg' render={()=><Reg 
+        apiReg={props.apiReg} 
+        regTitle={props.regTitle} 
+        regDesc={props.regDesc}/>} 
+      />
+      <Route path='/auth' render={()=><Auth 
+        apiAuth={props.apiAuth} 
+        authTitle={props.authTitle} 
+        authDesc={props.authDesc}/>} 
+      />
+      <Route path='/welcome-page' render={()=><WelcomePage 
+        wpTitle={props.wpTitle} 
+        wpDesc={props.wpDesc}/>} 
+      />
     </Router>
   );
 }

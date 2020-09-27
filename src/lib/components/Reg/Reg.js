@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect, NavLink } from 'react-router-dom';
-import { API_REG } from '../../services';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
@@ -55,7 +54,7 @@ class Registration extends Component {
     }
 
     sendUserData = (data) => {
-        axios.post(API_REG, data)
+        axios.post(this.props.apiReg, data)
             .then(response => {
                 if (response.status === 201) {
                     // localStorage.setItem(response.data.name, response.data.token);
@@ -93,8 +92,8 @@ class Registration extends Component {
     render() {
         if (this.state.redirect) { return <Redirect to='/welcome-page' />; }
         const infoTitleBlock = {
-            title: 'Cайт объявлений',
-            info: 'Легко купить, легко продать'
+            title: this.props.regTitle,
+            info: this.props.regDesc
         }
         return (
             <div className='registration-container'>

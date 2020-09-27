@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Redirect, NavLink } from 'react-router-dom';
-import { API_AUTH } from '../../services';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
@@ -33,7 +32,7 @@ class Auth extends Component {
   };
 
   sendUserData = (data) => {
-    axios.post(API_AUTH, data)
+    axios.post(this.props.apiAuth, data)
       .then(response => {
         if (response.status === 200) {
           localStorage.setItem(response.data.name, response.data.token);
@@ -59,8 +58,8 @@ class Auth extends Component {
   render() {
     if (this.state.redirect) { return <Redirect to='/' /> }
     const infoTitleBlock = {
-      title: 'Cайт объявлений',
-      info: 'Легко купить, легко продать'
+      title: this.props.authTitle,
+      info: this.props.authDesc
     }
     return (
       <div className='auth-container'>
@@ -105,7 +104,7 @@ class Auth extends Component {
                 </Button>
                 <div className='login-link'>
                   <span>Нет учетной записи? </span>
-                  <NavLink className='link' to='/'>Зарегистрируйтесь</NavLink>
+                  <NavLink className='link' to='/reg'>Зарегистрируйтесь</NavLink>
                 </div>
               </form>
             </div>

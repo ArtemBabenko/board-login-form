@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+// import { NavLink } from 'react-router-dom';
 import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -13,8 +13,8 @@ class WelcomePage extends Component {
 
     render() {
         const infoBlock = {
-            title: 'Cайт объявлений',
-            info: 'Легко купить, легко продать'
+            title: this.props.wpTitle,
+            info: this.props.wpDesc
         }
         return (
             <div className='welcome-page-container'>
@@ -40,7 +40,7 @@ class WelcomePage extends Component {
                                 <div className='user-result-field'>{this.props.email}</div>
                                 <div className='field-title'>User Password</div>
                                 <div className='user-result-field'>{this.props.password}</div>
-                                <NavLink className='link' to='/'>
+                                {/* <NavLink className='link' to='/'>
                                     <Button
                                         className='welcome-button'
                                         variant='contained'
@@ -48,7 +48,7 @@ class WelcomePage extends Component {
                                         color='secondary'>
                                         Leave the page
                                     </Button>
-                                </NavLink>
+                                </NavLink> */}
                             </div>
                         </div>
                     </Grid>
