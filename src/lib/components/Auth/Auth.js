@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Redirect, NavLink } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
@@ -19,6 +19,10 @@ class Auth extends Component {
       error: '',
       redirect: false
     }
+  }
+
+  regRenderFlag = () => {
+    this.props.regRenderFlag(true);
   }
 
   emailChange = (e) => {
@@ -104,7 +108,7 @@ class Auth extends Component {
                 </Button>
                 <div className='login-link'>
                   <span>Нет учетной записи? </span>
-                  <NavLink className='link' to='/reg'>Зарегистрируйтесь</NavLink>
+                  <span className='link' onClick={this.regRenderFlag} >Зарегистрируйтесь</span>
                 </div>
               </form>
             </div>

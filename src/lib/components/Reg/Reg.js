@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Redirect, NavLink } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
@@ -18,9 +17,16 @@ class Registration extends Component {
             name: '',
             password: '',
             pass_confirm: '',
-            error: '',
-            redirect: false
+            error: ''
         }
+    }
+
+    authRenderFlag = () => {
+        this.props.authRenderFlag(true);
+    }
+
+    welcomeRenderFlag = () => {
+        this.props.welcomeRenderFlag(true);
     }
 
     emailChange = (e) => {
@@ -58,11 +64,11 @@ class Registration extends Component {
             .then(response => {
                 if (response.status === 201) {
                     // localStorage.setItem(response.data.name, response.data.token);
-                    this.setState({ redirect: true });
+                    this.welcomeRenderFlag();
                 }
             })
             .catch(error => {
-                this.setState({ error: error.response.data.message });
+                // this.setState({ error: error.response.data.message });
             });
     }
 
@@ -90,7 +96,6 @@ class Registration extends Component {
     }
 
     render() {
-        if (this.state.redirect) { return <Redirect to='/welcome-page' />; }
         const infoTitleBlock = {
             title: this.props.regTitle,
             info: this.props.regDesc
@@ -149,7 +154,7 @@ class Registration extends Component {
                                 </Button>
                                 <div className='login-link'>
                                     <span>У вас есть аккаунт? </span>
-                                    <NavLink className='link' to='/auth'>Войти</NavLink>
+                                    <span className='link' onClick={this.authRenderFlag}>Войти</span>
                                 </div>
                             </form>
                         </div>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import { NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -9,8 +9,7 @@ import './welcome_page.scss';
 
 
 class WelcomePage extends Component {
-
-
+ 
     render() {
         const infoBlock = {
             title: this.props.wpTitle,
@@ -40,15 +39,16 @@ class WelcomePage extends Component {
                                 <div className='user-result-field'>{this.props.email}</div>
                                 <div className='field-title'>User Password</div>
                                 <div className='user-result-field'>{this.props.password}</div>
-                                {/* <NavLink className='link' to='/'>
+                                <NavLink className='link' to='/'>
                                     <Button
                                         className='welcome-button'
                                         variant='contained'
                                         type='submit'
-                                        color='secondary'>
+                                        color='secondary'
+                                        >
                                         Leave the page
                                     </Button>
-                                </NavLink> */}
+                                </NavLink>
                             </div>
                         </div>
                     </Grid>
