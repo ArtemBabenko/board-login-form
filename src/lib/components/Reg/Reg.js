@@ -3,6 +3,7 @@ import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
+import bgReg from '../../img/bg.png';
 import cake_img from '../../img/registration-cake.png';
 import cake_heart_img from '../../img/registration-cake2.png';
 import candy_img from '../../img/registration-candy.png';
@@ -19,6 +20,51 @@ class Registration extends Component {
             pass_confirm: '',
             error: ''
         }
+    }
+
+    titleContentRender = (regTitleBasic, regDescBasic, regTitleCustom, regDescCustom) => {
+        let title = regTitleBasic;
+        let desc = regDescBasic;
+        if (regTitleCustom != null && regDescCustom != null) { title = regTitleCustom; desc = regDescCustom; }
+        return {
+            title: title,
+            info: desc
+        }
+    }
+
+    bgRender = (regBgBasic, regBgCustom) => {
+        let bg = regBgBasic;
+        if (regBgCustom != null) bg = regBgCustom;
+        return {
+            background: `url(${bg})`
+        };
+    }
+
+    imgRender = (regImgBasic, regImgCustom) => {
+        let img = regImgBasic;
+        if (regImgCustom != null) {
+            switch (regImgCustom === 'none') {
+                case true:
+                    img = null;
+                    break;
+                case false:
+                    img = regImgCustom
+                    break;
+            }
+        }
+
+        return {
+            backgroundImage: `url(${img})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            backgroundRepeat: 'no-repeat'
+        };
+    }
+
+    apiReg = (apiRegCustom) => {
+       let api = 'Please enter api';
+       (apiRegCustom != null) ? api = apiRegCustom : alert(api)
+       return api;
     }
 
     authRenderFlag = () => {
@@ -60,7 +106,7 @@ class Registration extends Component {
     }
 
     sendUserData = (data) => {
-        axios.post(this.props.apiReg, data)
+        axios.post(this.apiReg(this.props.apiReg), data)
             .then(response => {
                 if (response.status === 201) {
                     // localStorage.setItem(response.data.name, response.data.token);
@@ -96,26 +142,26 @@ class Registration extends Component {
     }
 
     render() {
-        const infoTitleBlock = {
-            title: this.props.regTitle,
-            info: this.props.regDesc
-        }
+        const infoTitleBlock = this.titleContentRender(
+            'Registration title', 'Descriptions of Registration',
+            this.props.regTitleCustom, this.props.regDescCustom
+        );
         return (
             <div className='registration-container'>
                 <Grid container>
                     <Grid xs={12} lg={6} item className='content-column'>
-                        <div className='title-container'>
+                        <div className='title-container' style={this.bgRender(bgReg, this.props.regBgCustom)}>
                             <div className='img-cake-container'>
-                                <img className='img-cake' src={cake_img} alt="imgCake" />
+                                <div className='img-cake' style={this.imgRender(cake_img, this.props.regTopImgCustom)} />
                             </div>
                             <div className='title'>
                                 <InfoTitleBlock infoBlock={infoTitleBlock} />
                             </div>
                             <div className='img-heart-cake-container'>
-                                <img className='img-heart-cake' src={cake_heart_img} alt="imgCake" />
+                                <div className='img-heart-cake' style={this.imgRender(cake_heart_img, this.props.regMidImgCustom)} />
                             </div>
                             <div className='img-candy-container'>
-                                <img className='img-candy' src={candy_img} alt="imgCandy" />
+                                <div className='img-candy' style={this.imgRender(candy_img, this.props.regBotImgCustom)} />
                             </div>
                         </div>
                     </Grid>
@@ -160,7 +206,7 @@ class Registration extends Component {
                         </div>
                     </Grid>
                 </Grid>
-            </div>
+            </div >
         )
     }
 }

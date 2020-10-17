@@ -28,9 +28,9 @@ class BoardLoginForm extends Component {
   renderPage = (regPage, authPage) => {
     switch (true) {
       case regPage:
-        return <Reg apiReg={this.props.apiReg} regTitle={this.props.regTitle}
-          regDesc={this.props.regDesc} authRenderFlag={this.authRenderFlag}
-          welcomeRenderFlag={this.welcomeRenderFlag} />
+        return <Reg apiReg={this.props.apiReg} regTitleCustom={this.props.regTitleCustom} regDescCustom={this.props.regDescCustom}
+          regBgCustom={this.props.regBgCustom} regTopImgCustom={this.props.regTopImgCustom} regMidImgCustom={this.props.regMidImgCustom}
+          regBotImgCustom={this.props.regBotImgCustom} authRenderFlag={this.authRenderFlag} welcomeRenderFlag={this.welcomeRenderFlag} />
       case authPage:
         return <Auth apiAuth={this.props.apiAuth} authTitle={this.props.authTitle}
           authDesc={this.props.authDesc} regRenderFlag={this.regRenderFlag} />
