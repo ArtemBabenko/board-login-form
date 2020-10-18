@@ -32,10 +32,12 @@ class BoardLoginForm extends Component {
           regBgCustom={this.props.regBgCustom} regTopImgCustom={this.props.regTopImgCustom} regMidImgCustom={this.props.regMidImgCustom}
           regBotImgCustom={this.props.regBotImgCustom} authRenderFlag={this.authRenderFlag} welcomeRenderFlag={this.welcomeRenderFlag} />
       case authPage:
-        return <Auth apiAuth={this.props.apiAuth} authTitle={this.props.authTitle}
-          authDesc={this.props.authDesc} regRenderFlag={this.regRenderFlag} />
+        return <Auth apiAuth={this.props.apiAuth} authTitleCustom={this.props.authTitleCustom} authDescCustom={this.props.authDescCustom}
+          authBgCustom={this.props.authBgCustom} authTopImgCustom={this.props.authTopImgCustom} authBotImgCustom={this.props.authBotImgCustom}
+          regRenderFlag={this.regRenderFlag} />
       default:
-        return <WelcomePage wpTitle={this.props.wpTitle} wpDesc={this.props.wpDesc} />
+        return <WelcomePage wpTitleCustom={this.props.wpTitleCustom} wpDescCustom={this.props.wpDescCustom} wpBgCustom={this.props.wpBgCustom}
+          wpTopImgCustom={this.props.wpTopImgCustom} wpBotImgCustom={this.props.wpBotImgCustom} />
     }
   }
 

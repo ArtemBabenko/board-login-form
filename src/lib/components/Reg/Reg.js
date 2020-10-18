@@ -52,7 +52,6 @@ class Registration extends Component {
                     break;
             }
         }
-
         return {
             backgroundImage: `url(${img})`,
             backgroundPosition: 'center',
@@ -124,20 +123,20 @@ class Registration extends Component {
         if (email !== '' && name !== '' && password !== '' && pass_confirm !== '') {
             switch (false) {
                 case this.validateEmail(email):
-                    this.setState({ error: 'Пожалуйста, введите корректный e-mail.' });
+                    this.setState({ error: 'Please enter a valid email address.' });
                     break;
                 case this.validatePassword(password):
-                    this.setState({ error: 'Пароль должен содержать от 8 буквенно-цифровых символов.' });
+                    this.setState({ error: 'Password must contain at least 8 alphanumeric characters.' });
                     break;
                 case password === pass_confirm:
-                    this.setState({ error: 'Пароли не совпадают.' });
+                    this.setState({ error: 'Passwords do not match.' });
                     break;
                 default:
                     const data = { email: email, name: name, password: password }
                     this.sendUserData(data);
             }
         } else {
-            this.setState({ error: 'Пожалуйста, заполните все поля.' });
+            this.setState({ error: 'Please fill in all fields.' });
         }
     }
 
@@ -199,8 +198,8 @@ class Registration extends Component {
                                     SIGN UP
                                 </Button>
                                 <div className='login-link'>
-                                    <span>У вас есть аккаунт? </span>
-                                    <span className='link' onClick={this.authRenderFlag}>Войти</span>
+                                    <span>Do you have an account? </span>
+                                    <span className='link' onClick={this.authRenderFlag}>Enter</span>
                                 </div>
                             </form>
                         </div>

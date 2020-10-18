@@ -4,8 +4,9 @@ import { Redirect } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
-import cake_img from '../../img/auth-cake.png';
+import bgAuth from '../../img/bg.png';
 import part_cake_img from '../../img/auth-part-cake.png';
+import cake_img from '../../img/auth-cake.png';
 import './auth.scss';
 
 
@@ -20,6 +21,50 @@ class Auth extends Component {
       redirect: false
     }
   }
+
+  titleContentRender = (authTitleBasic, authDescBasic, authTitleCustom, authDescCustom) => {
+    let title = authTitleBasic;
+    let desc = authDescBasic;
+    if (authTitleCustom != null && authDescCustom != null) { title = authTitleCustom; desc = authDescCustom; }
+    return {
+      title: title,
+      info: desc
+    }
+  }
+
+  bgRender = (authBgBasic, authBgCustom) => {
+    let bg = authBgBasic;
+    if (authBgCustom != null) bg = authBgCustom;
+    return {
+      background: `url(${bg})`
+    };
+  }
+
+  imgRender = (authImgBasic, authImgCustom) => {
+    let img = authImgBasic;
+    if (authImgCustom != null) {
+      switch (authImgCustom === 'none') {
+        case true:
+          img = null;
+          break;
+        case false:
+          img = authImgCustom
+          break;
+      }
+    }
+    return {
+      backgroundImage: `url(${img})`,
+      backgroundPosition: 'center',
+      backgroundSize: 'contain',
+      backgroundRepeat: 'no-repeat'
+    };
+  }
+
+  apiAuth = (apiAuthCustom) => {
+    let api = 'Please, enter api.';
+    (apiAuthCustom != null) ? api = apiAuthCustom : alert(api)
+    return api;
+ }
 
   regRenderFlag = () => {
     this.props.regRenderFlag(true);
@@ -36,7 +81,7 @@ class Auth extends Component {
   };
 
   sendUserData = (data) => {
-    axios.post(this.props.apiAuth, data)
+    axios.post(this.apiAuth(this.props.apiAuth), data)
       .then(response => {
         if (response.status === 200) {
           localStorage.setItem(response.data.name, response.data.token);
@@ -52,7 +97,7 @@ class Auth extends Component {
     e.preventDefault();
     let { email, password } = this.state;
     if (email === '' || password === '') {
-      this.setState({ error: 'Пожалуйста, заполните все поля.' });
+      this.setState({ error: 'Please fill in all fields.' });
     } else {
       const data = { email: email, password: password }
       this.sendUserData(data);
@@ -61,23 +106,23 @@ class Auth extends Component {
 
   render() {
     if (this.state.redirect) { return <Redirect to='/' /> }
-    const infoTitleBlock = {
-      title: this.props.authTitle,
-      info: this.props.authDesc
-    }
+    const infoTitleBlock = this.titleContentRender(
+      'Authentication title', 'Descriptions of Authentication',
+      this.props.authTitleCustom, this.props.authDescCustom
+    );
     return (
       <div className='auth-container'>
         <Grid container>
           <Grid xs={12} lg={6} item className='content-column'>
-            <div className='title-container'>
+            <div className='title-container' style={this.bgRender(bgAuth, this.props.authBgCustom)}>
               <div className='img-part-cake-container'>
-                <img className='img-part-cake' src={part_cake_img} alt="imgPartCake" />
+                <div className='img-part-cake' style={this.imgRender(part_cake_img, this.props.authTopImgCustom)} />
               </div>
               <div className='title'>
                 <InfoTitleBlock infoBlock={infoTitleBlock} />
               </div>
               <div className='img-cake-container'>
-                <img className='img-cake' src={cake_img} alt="imgCake" />
+                <div className='img-cake' style={this.imgRender(cake_img, this.props.authBotImgCustom)} />
               </div>
             </div>
           </Grid>
@@ -107,8 +152,8 @@ class Auth extends Component {
                   SIGN IN
                 </Button>
                 <div className='login-link'>
-                  <span>Нет учетной записи? </span>
-                  <span className='link' onClick={this.regRenderFlag} >Зарегистрируйтесь</span>
+                  <span>Don't have an account? </span>
+                  <span className='link' onClick={this.regRenderFlag}>Register</span>
                 </div>
               </form>
             </div>

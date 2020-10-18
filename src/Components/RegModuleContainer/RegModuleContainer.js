@@ -13,17 +13,24 @@ function RegModuleContainer() {
         <div>
             <BoardLoginForm
                 apiReg={API_REG}
-                apiAuth={API_AUTH}
                 regTitleCustom={REG_TITLE}
                 regDescCustom={REG_DESC}
                 regBgCustom={RegBgCustom}
                 regTopImgCustom={RegTopImgCustom}
                 regMidImgCustom={RegMidImgCustom}
-                regBotImgCustom={RegBotImgCustom}
-                authTitle={AUTH_TITLE}
-                authDesc={AUTH_DESC}
-                wpTitle={WP_TITLE}
-                wpDesc={WP_DESC} />
+                regBotImgCustom={'none'}
+                apiAuth={API_AUTH}
+                // authTitleCustom={AUTH_TITLE}
+                // authDescCustom={AUTH_DESC}
+                // authBgCustom={RegBgCustom}
+                // authTopImgCustom={RegTopImgCustom}
+                // authBotImgCustom={RegBotImgCustom}
+                // wpBgCustom={RegBgCustom}
+                // wpTitleCustom={WP_TITLE}
+                // wpDescCustom={WP_DESC}
+                // wpTopImgCustom={RegTopImgCustom}
+                // wpBotImgCustom={RegBotImgCustom}
+            />
         </div>
     );
 }

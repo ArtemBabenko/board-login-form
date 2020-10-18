@@ -9,17 +9,6 @@ function App() {
     <Router>
       <Route path="/" component={TestHomePage} exact />
       <Route path="/regmodule" component={RegModuleContainer} exact />
-      {/* <Route path='/' render={() => <TestHomePage/>} exact />
-      <Route path='/regmodule' render={() => <BoardLoginForm
-        apiReg={API_REG}
-        apiAuth={API_AUTH}
-        regTitle={REG_TITLE}
-        regDesc={REG_DESC}
-        authTitle={AUTH_TITLE}
-        authDesc={AUTH_DESC}
-        wpTitle={WP_TITLE}
-        wpDesc={WP_DESC} />}
-      exact /> */}
     </Router>
   );
 }
