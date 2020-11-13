@@ -11,10 +11,20 @@ import './welcome_page.scss';
 
 class WelcomePage extends Component {
     
-    titleContentRender = (welTitleBasic, welDescBasic, welTitleCustom, welDescCustom) => {
-        let title = welTitleBasic;
-        let desc = welDescBasic;
-        if (welTitleCustom != null && welDescCustom != null) { title = welTitleCustom; desc = welDescCustom; }
+    titleContentRender = (wpTitleBasic, wpDescBasic, wpTitleCustom, wpDescCustom) => {
+        let title = wpTitleCustom;
+        let desc = wpDescCustom;
+        switch (true) {
+            case title == null && desc == null:
+                title = wpTitleBasic;
+                desc = wpDescBasic;
+                break;
+            case title == null:
+                title = wpTitleBasic;
+                break;
+            case desc == null:
+                desc = wpDescBasic;
+        }
         return {
             title: title,
             info: desc
@@ -52,21 +62,21 @@ class WelcomePage extends Component {
     render() {
         const infoTitleBlock = this.titleContentRender(
             'WelcomePage title', 'Descriptions of WelcomePage',
-            this.props.wpTitleCustom, this.props.wpDescCustom
+            this.props.wpTitle, this.props.wpDesc
         );
         return (
             <div className='welcome-page-container'>
                 <Grid container>
                     <Grid xs={12} lg={6} item className='content-column'>
-                        <div className='title-container' style={this.bgRender(bgWp, this.props.wpBgCustom)}>
+                        <div className='title-container' style={this.bgRender(bgWp, this.props.wpBg)}>
                             <div className='img-salute-container'>
-                                <div className='img-salute' style={this.imgRender(salute_img, this.props.wpTopImgCustom)} />
+                                <div className='img-salute' style={this.imgRender(salute_img, this.props.wpTopImg)} />
                             </div>
                             <div className='title'>
                                 <InfoTitleBlock infoBlock={infoTitleBlock} />
                             </div>
                             <div className='img-cake-container'>
-                                <div className='img-cake' style={this.imgRender(cake_img, this.props.wpBotImgCustom)} />
+                                <div className='img-cake' style={this.imgRender(cake_img, this.props.wpBotImg)} />
                             </div>
                         </div>
                     </Grid>

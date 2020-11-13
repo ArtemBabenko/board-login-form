@@ -23,9 +23,19 @@ class Auth extends Component {
   }
 
   titleContentRender = (authTitleBasic, authDescBasic, authTitleCustom, authDescCustom) => {
-    let title = authTitleBasic;
-    let desc = authDescBasic;
-    if (authTitleCustom != null && authDescCustom != null) { title = authTitleCustom; desc = authDescCustom; }
+    let title = authTitleCustom;
+    let desc = authDescCustom;
+    switch (true) {
+      case title == null && desc == null:
+        title = authTitleBasic;
+        desc = authDescBasic;
+        break;
+      case title == null:
+        title = authTitleBasic;
+        break;
+      case desc == null:
+        desc = authDescBasic;
+    }
     return {
       title: title,
       info: desc
@@ -64,7 +74,7 @@ class Auth extends Component {
     let api = 'Please, enter api.';
     (apiAuthCustom != null) ? api = apiAuthCustom : alert(api)
     return api;
- }
+  }
 
   regRenderFlag = () => {
     this.props.regRenderFlag(true);
@@ -108,21 +118,21 @@ class Auth extends Component {
     if (this.state.redirect) { return <Redirect to='/' /> }
     const infoTitleBlock = this.titleContentRender(
       'Authentication title', 'Descriptions of Authentication',
-      this.props.authTitleCustom, this.props.authDescCustom
+      this.props.authTitle, this.props.authDesc
     );
     return (
       <div className='auth-container'>
         <Grid container>
           <Grid xs={12} lg={6} item className='content-column'>
-            <div className='title-container' style={this.bgRender(bgAuth, this.props.authBgCustom)}>
+            <div className='title-container' style={this.bgRender(bgAuth, this.props.authBg)}>
               <div className='img-part-cake-container'>
-                <div className='img-part-cake' style={this.imgRender(part_cake_img, this.props.authTopImgCustom)} />
+                <div className='img-part-cake' style={this.imgRender(part_cake_img, this.props.authTopImg)} />
               </div>
               <div className='title'>
                 <InfoTitleBlock infoBlock={infoTitleBlock} />
               </div>
               <div className='img-cake-container'>
-                <div className='img-cake' style={this.imgRender(cake_img, this.props.authBotImgCustom)} />
+                <div className='img-cake' style={this.imgRender(cake_img, this.props.authBotImg)} />
               </div>
             </div>
           </Grid>
