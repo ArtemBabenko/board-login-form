@@ -4,7 +4,7 @@ import {
     REG_TITLE, REG_DESC, REG_COLOR_TITLE, REG_FORM_TITLE, REG_EMAIL_FIELD_TITLE, REG_USERNAME_FIELD_TITLE,
     REG_PASS_FIELD_TITLE, REG_CONFPASS_FIELD_TITLE, REG_FORM_COLOR_TITLE, REG_BTN_TEXT,
     REG_BTN_COLOR, REG_BTN_COLOR_TEXT, REG_HAVEACC_TEXT, REG_ENTERLINK_TEXT, FILL_ALL_FIELDS_ERR, VALID_EMAIL_ERR,
-    VALID_PASS_CHAR_ERR, CONF_PASS_ERR, API_ERR
+    VALID_PASS_CHAR_ERR, CONF_PASS_ERR, API_ERR, API_DATA_ERR
 } from '../../services';
 import Grid from '@material-ui/core/Grid';
 import InfoTitleBlock from '../InfoTitleBlock/InfoTitleBlock';
@@ -110,9 +110,18 @@ class Registration extends Component {
     }
 
     apiReg = (apiRegCustom) => {
-        let api = this.formTitleRender(API_ERR, this.props.regApiErr);
-        (apiRegCustom != null) ? api = apiRegCustom : alert(api)
+        let api = API_ERR;
+        (apiRegCustom != null) ? api = apiRegCustom : console.log(api);
         return api;
+    }
+
+    getApiData = (resp, str) => {
+        if (str != null) {
+            str = str.split('.')
+            let obj = resp[str.shift()];
+            while (obj && str.length) obj = obj[str.shift()];
+            return obj;
+        }
     }
 
     authRenderFlag = () => {
@@ -121,6 +130,10 @@ class Registration extends Component {
 
     welcomeRenderFlag = () => {
         this.props.welcomeRenderFlag(true);
+    }
+
+    welcomeTransfData = (userEmail, userPass) => {
+        this.props.welcomeTransfData(userEmail, userPass);
     }
 
     emailChange = (e) => {
@@ -154,16 +167,23 @@ class Registration extends Component {
     }
 
     sendUserData = (data) => {
-        axios.post(this.apiReg(this.props.apiReg), data)
-            .then(response => {
-                if (response.status === 201) {
-                    // localStorage.setItem(response.data.name, response.data.token);
-                    this.welcomeRenderFlag();
-                }
-            })
-            .catch(error => {
-                // this.setState({ error: error.response.data.message });
-            });
+        switch (true) {
+            case this.props.apiRegUserName != null && this.props.apiRegUserToken != null && this.props.apiRegErr != null:
+                axios.post(this.apiReg(this.props.apiReg), data)
+                    .then(response => {
+                        if (response.status === 201) {
+                            localStorage.setItem(this.getApiData(response, this.props.apiRegUserName), this.getApiData(response, this.props.apiRegUserToken));
+                            this.welcomeRenderFlag();
+                            this.welcomeTransfData(this.getApiData(response, this.props.apiRegUserEmail), this.getApiData(response, this.props.apiRegUserPass));
+                        }
+                    })
+                    .catch(error => {
+                        this.setState({ error: this.getApiData(error.response, this.props.apiRegErr) });
+                    });
+                break;
+
+            default: console.log(API_DATA_ERR);
+        }
     }
 
     signUpUser = (e) => {
